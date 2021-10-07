@@ -1,0 +1,28 @@
+[MIN_ENGINE_VER]
+1
+[AUTHOR]
+ApkEditor
+[PACKAGE]
+*
+[MATCH_REPLACE]
+TARGET:
+  [LAUNCHER_ACTIVITIES]
+MATCH
+\.method (.+) onCreate\(Landroid/os/Bundle;\)V\n  \.registers (\d+)
+REGEX:
+  true
+  REPLACE:
+.method ${GROUP1} onCreate(Landroid/os/Bundle;)V
+   .registers ${GROUP2}
+   
+   const/4 v0, 0×1
+   
+   const-string v1, "PROVIDED BY (DKing Development)"
+   
+   invoke-static {p0, v1, v0}, Landroid/widget/Toast;->makeText(Landroid/Context;Ljava/lang/CharSequence;l)Landroid/widget/Toast;
+   
+   move-result-object v0
+   
+   invoke-virtual {v0}, Landroid/widget/Toast;->show()V
+   
+   [/MATCH_REPLACE]
